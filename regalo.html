@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fff5fa">
+<title>Para Gatito, de Alancito ❤️</title>
+
+<style>
+:root {
+  --pink: #f4a6c8;
+  --deep: #a52b68;
+  --purple: #8b5cf6;
+  --ink: #392837;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  background-color: #fff5fa;
+  background-image:
+    radial-gradient(circle at 10% 10%, #ffd6e8 0%, transparent 45%),
+    radial-gradient(circle at 90% 15%, #e0d4ff 0%, transparent 45%),
+    radial-gradient(circle at 20% 85%, #d6ecff 0%, transparent 50%),
+    radial-gradient(circle at 85% 80%, #ffe4d6 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, #fff0f7 0%, transparent 70%),
+    linear-gradient(135deg, #fff5fa 0%, #f4e8ff 50%, #eaf4ff 100%);
+  background-attachment: fixed;
+  background-size: cover;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Burbujas decorativas suaves para dar efecto difuminado */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, #ffc7e0 0%, transparent 70%);
+  top: -120px;
+  left: -120px;
+  animation: floatA 12s ease-in-out infinite alternate;
+}
+
+body::after {
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, #c8b6ff 0%, transparent 70%);
+  bottom: -150px;
+  right: -150px;
+  animation: floatB 14s ease-in-out infinite alternate;
+}
+
+@keyframes floatA {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(40px, 60px) scale(1.1); }
+}
+
+@keyframes floatB {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(-50px, -40px) scale(1.15); }
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.screen {
+  min-height: 100vh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.screen.active { display: flex; }
+
+.card, .section {
+  width: min(680px, 100%);
+  background: #ffffffeb;
+  border: 1px solid #f4cde0;
+  border-radius: 26px;
+  padding: clamp(22px, 5vw, 42px);
+  box-shadow: 0 18px 60px #a52b6815;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  backdrop-filter: blur(6px);
+}
+
+.eyebrow {
+  font: 600 .76rem/1.4 Arial, sans-serif;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--deep);
+}
+
+h1, h2 {
+  line-height: 1.12;
+  margin: .5em 0;
+  color: #75224e;
+}
+
+h1 { font-size: clamp(2rem, 7vw, 3.5rem); }
+h2 { font-size: clamp(1.65rem, 5vw, 2.4rem); }
+
+p {
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+.muted, .date-note {
+  color: #8b6b7e;
+  font-size: .94rem;
+}
+
+.btn {
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(120deg, #f7a7c9, #c084fc);
+  color: white;
+  padding: 14px 23px;
+  font-weight: bold;
+  box-shadow: 0 8px 22px #c05d9630;
+  transition: transform .2s;
+}
+
+.btn:hover { transform: translateY(-2px); }
+
+.heart-wrap {
+  width: min(310px, 80vw);
+  margin: 18px auto;
+}
+
+.heart {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 12px #db6b9a35);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.heart-label {
+  font: bold 1rem Arial, sans-serif;
+  color: #a52b68;
+}
+
+.progress {
+  height: 8px;
+  background: #f7dfeb;
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 16px auto;
+  max-width: 300px;
+}
+
+.progress span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #f5a3c5, #a78bfa);
+  transition: width .2s;
+}
+
+main {
+  display: none;
+  max-width: 820px;
+  margin: auto;
+  padding: 22px 15px 70px;
+  position: relative;
+  z-index: 1;
+}
+
+main.show { display: block; }
+
+.section {
+  margin: 18px auto;
+  padding: clamp(20px, 4vw, 34px);
+}
+
+.section img { max-width: 100%; }
+.section img:not(.album):not(.cover) { height: auto; }
+
+/* ====== FOTO DE PORTADA MÁS GRANDE Y CON MARCO ====== */
+.cover {
+  display: block;
+  width: min(440px, 92%) !important;
+  height: auto !important;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  margin: 18px auto;
+  border-radius: 22px;
+  border: 8px solid #ffffff;
+  outline: 3px solid #f4a6c8;
+  outline-offset: 4px;
+  box-shadow:
+    0 0 0 12px #fff5fa,
+    0 18px 40px #a52b6833,
+    0 6px 18px #a52b6822;
+  padding: 0;
+}
+/* ==================================================== */
+
+.divider {
+  color: #d66b9d;
+  letter-spacing: .6em;
+  margin: 8px;
+}
+
+/* ====== DISCO REDONDO CON AGUJERITO ====== */
+.album-wrap {
+  position: relative;
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  margin: 14px auto;
+}
+
+.album {
+  width: 200px !important;
+  height: 200px !important;
+  min-width: 200px !important;
+  min-height: 200px !important;
+  max-width: 200px !important;
+  max-height: 200px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border: 7px solid white;
+  box-shadow: 0 8px 30px #ab558b30;
+  animation: spin 9s linear infinite;
+  animation-play-state: paused;
+  display: block;
+}
+
+.album-wrap::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  background: white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 3px #f4cde0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.album.playing { animation-play-state: running; }
+/* ======================================== */
+
+audio {
+  width: 100%;
+  max-width: 420px;
+  margin-top: 14px;
+  accent-color: #c05d96;
+}
+
+/* ====== CARRUSEL DE RECUERDOS ====== */
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 22px auto 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.carousel-track {
+  flex: 1;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  border-radius: 18px;
+  border: 5px solid white;
+  box-shadow: 0 10px 30px #a52b6822;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-track img {
+  flex: 0 0 100%;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  scroll-snap-align: center;
+  border-radius: 0;
+  display: block;
+}
+
+.carousel-btn {
+  border: 0;
+  background: linear-gradient(120deg, #f7a7c9, #c084fc);
+  color: white;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  font-weight: bold;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 18px #c05d9630;
+  transition: transform .2s;
+}
+
+.carousel-btn:hover { transform: scale(1.08); }
+.carousel-btn:active { transform: scale(0.96); }
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px 0 4px;
+}
+
+.carousel-dots span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #f4cde0;
+  transition: background .25s, transform .25s;
+  cursor: pointer;
+}
+
+.carousel-dots span.active {
+  background: #c05d96;
+  transform: scale(1.25);
+}
+/* ==================================== */
+
+.letter {
+  text-align: left;
+  background: #fff8fb;
+  border: 1px dashed #e7a1c3;
+  border-radius: 16px;
+  padding: 22px;
+  white-space: pre-line;
+  line-height: 1.85;
+}
+
+.timeline {
+  display: grid;
+  gap: 12px;
+  text-align: left;
+  margin: 22px auto;
+  max-width: 500px;
+}
+
+/* ====== EVENTOS CON FOTOS (3 ETAPAS) ====== */
+.event {
+  border-left: 3px solid #e99abd;
+  padding: 12px 0 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.event-text {
+  text-align: left;
+}
+
+.event-photos {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.event-photos img {
+  width: calc(50% - 5px);
+  max-width: 160px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 4px solid white;
+  box-shadow: 0 6px 18px #a52b6822;
+  transition: transform .25s;
+}
+
+.event-photos img:hover {
+  transform: scale(1.05);
+}
+
+/* En pantallas grandes: texto a la izquierda, fotos a la derecha */
+@media (min-width: 700px) {
+  .event {
+    flex-direction: row;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .event-text {
+    flex: 1;
+  }
+
+  .event-photos {
+    flex-shrink: 0;
+    justify-content: flex-end;
+  }
+
+  .event-photos img {
+    width: 110px;
+    max-width: 110px;
+  }
+}
+/* ==================================== */
+
+.big-number {
+  font-size: clamp(2.8rem, 10vw, 4.5rem);
+  font-weight: bold;
+  color: #ad3977;
+}
+
+.quiz-question {
+  border-top: 1px solid #f1d5e3;
+  padding: 18px 0;
+  text-align: left;
+}
+
+.quiz-question h3 {
+  font-size: 1.08rem;
+  color: #75224e;
+}
+
+.option {
+  display: block;
+  margin: 9px 0;
+  padding: 12px 14px;
+  border: 1px solid #efc5d9;
+  border-radius: 12px;
+  background: #fff8fb;
+}
+
+.option input {
+  margin-right: 9px;
+  accent-color: #b33e79;
+}
+
+.feedback {
+  font-weight: bold;
+  min-height: 1.5em;
+  color: #a52b68;
+}
+
+.ticket {
+  background: #fff6fa;
+  border: 2px dashed #d56a9c;
+  border-radius: 18px;
+  padding: 22px;
+  text-align: left;
+  position: relative;
+}
+
+.ticket-label {
+  font: 700 .75rem Arial, sans-serif;
+  letter-spacing: .18em;
+  color: #a52b68;
+}
+
+.hidden { display: none !important; }
+
+.footer {
+  text-align: center;
+  color: #a37c91;
+  padding: 24px 10px;
+  font-size: .9rem;
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- PANTALLA DE BIENVENIDA -->
+<section id="intro" class="screen active">
+  <div class="card">
+    <div class="eyebrow">Una sorpresa hecha con amor</div>
+    <div style="font-size:2.5rem;margin:12px">💌</div>
+
+    <h1>Tienes un regalo de <span style="color:#bd4f89">ALANCITO</span></h1>
+
+    <p>
+      Habibi, preparé esto pensando en ti, en nosotros y en cada
+      pequeño momento que ha hecho tan bonita nuestra historia.
+    </p>
+
+    <p>
+      Respira, sonríe y ven a descubrirlo poquito a poquito.
+      Todo lo que verás aquí tiene un pedacito de mí y de lo mucho
+      que te amo. ❤️
+    </p>
+
+    <button class="btn" onclick="goToHeart()">
+       ✨ Abrir mi regalo ✨
+    </button>
+
+    <p class="muted">Hecho especialmente para ti, mi gatito.</p>
+  </div>
+</section>
+
+<!-- CORAZÓN INTERACTIVO -->
+<section id="heartScreen" class="screen">
+  <div class="card">
+    <div class="eyebrow">Antes de continuar…</div>
+    <h2>Llena este corazón</h2>
+
+    <p>
+      Toca el corazón varias veces hasta llenarlo.
+      Cada toque representa un poquito de todo el amor que te tengo. ❤️
+    </p>
+
+    <div class="heart-wrap">
+      <svg class="heart" id="heart" viewBox="0 0 200 185"
+           role="button" tabindex="0" aria-label="Toca para llenar el corazón">
+        <defs>
+          <path id="heartShape"
+            d="M100 171 C82 154 16 112 16 59 C16 10 77 2 100 43 C123 2 184 10 184 59 C184 112 118 154 100 171Z"/>
+        </defs>
+
+        <use href="#heartShape" fill="#fbe1ec"
+             stroke="#df78a7" stroke-width="2"/>
+
+        <use href="#heartShape" id="heartFill" fill="#ee77a9"
+             style="clip-path:inset(100% 0 0 0);transition:clip-path .15s linear"/>
+      </svg>
+    </div>
+
+    <div class="heart-label" id="heartLabel">0% de amor cargado</div>
+    <div class="progress"><span id="progressBar"></span></div>
+
+    <button class="btn" id="heartBtn" onclick="fillHeart()">
+      Llenar de amor ❤️
+    </button>
+
+    <p class="muted">Pucha el botón.</p>
+  </div>
+</section>
+
+<!-- CONTENIDO DEL REGALO -->
+<main id="gift">
+
+  <!-- 1. FOTO DE USTEDES -->
+  <section class="section">
+    <div class="eyebrow">Para ti, Habibi</div>
+    <h1>Mi persona favorita ❤️</h1>
+
+    <img class="cover" src="foto-portada.jpeg"
+         alt="Una foto de Alan y Christian">
+
+    <p>
+      De todas las cosas bonitas que me han pasado, conocerte y poder
+      llamarte mi novio es de mis favoritas.
+    </p>
+
+    <div class="divider">♡ ♡ ♡</div>
+  </section>
+
+  <!-- 2. DISCO Y CANCIÓN -->
+  <section class="section">
+    <div class="eyebrow">Un pedacito de nosotros</div>
+    <h2> 🎶 Nuestra canción 🎶</h2>
+
+    <div class="album-wrap">
+      <img class="album" id="record" src="foto-disco.jpeg"
+           alt="Foto de nosotros en el disco">
+    </div>
+
+    <p class="muted">Escogí esta cancion porque representa cómo quiero guardar cada momento contigo, como si fueran recuerdos que puedo volver a reproducir una y otra vez. Porque cada cita, cada beso y cada instante a tu lado se ha convertido en una parte de nuestra historia que quiero conservar para siempre. ❤️</p>
+
+    <audio id="song" controls preload="metadata">
+      <source src="DVD.mp3" type="audio/mpeg">
+      Tu navegador no puede reproducir este audio.
+    </audio>
+  </section>
+
+  <!-- 3. CARRUSEL DE RECUERDOS -->
+  <section class="section">
+    <div class="eyebrow">Nuestros recuerdos</div>
+    <h2>Momentos que no se borran 📸</h2>
+
+    <p>
+      Hay momentos que parecen sencillos, pero contigo se vuelven
+      recuerdos que quiero guardar para siempre.
+    </p>
+
+    <div class="carousel">
+      <button class="carousel-btn prev" onclick="moveSlide(-1)" aria-label="Anterior">‹</button>
+
+      <div class="carousel-track" id="carouselTrack">
+        <img src="momento-1.jpeg" alt="Nuestro recuerdo 1">
+        <img src="momento-2.jpeg" alt="Nuestro recuerdo 2">
+        <img src="momento-3.jpeg" alt="Nuestro recuerdo 3">
+        <img src="momento-4.jpeg" alt="Nuestro recuerdo 4">
+        <img src="momento-5.jpeg" alt="Nuestro recuerdo 5">
+      </div>
+
+      <button class="carousel-btn next" onclick="moveSlide(1)" aria-label="Siguiente">›</button>
+    </div>
+
+    <div class="carousel-dots" id="carouselDots"></div>
+
+    <p class="muted">Desliza para ver más recuerdos 💗</p>
+  </section>
+
+  <!-- 4. CARTA -->
+  <section class="section">
+    <div class="eyebrow">De mi corazón al tuyo</div>
+    <h2>Una carta para mi gatito 💌</h2>
+
+    <div class="letter">Habibi:
+
+A veces pienso en todas las pequeñas cosas que hacemos juntos:
+nuestras risas, nuestras fotos, nuestras citas y esos momentos
+simples que para mí significan muchísimo. Tal vez para los demás
+sean cosas pequeñas, pero cuando son contigo se convierten en
+recuerdos enormes.
+
+Gracias por llegar a mi vida, por compartir tus días conmigo y
+por dejarme conocerte cada vez más. Me encanta poder construir
+algo contigo, aprender de nosotros y encontrar nuevas razones
+para elegirte.
+
+Quiero que nunca olvides que detrás de cada detalle de esta
+página hay alguien que piensa en ti con muchísimo amor. No
+necesito que nuestra historia sea perfecta; quiero que sea
+nuestra, que sigamos cuidándola y que nunca nos falten las ganas
+de tomarnos de la mano.
+
+Te amo, mi Gatito. Gracias por ser parte de mi mundo y por hacer
+que tantas cosas cotidianas se sientan especiales.
+
+Con todo mi amor,
+Tibulon ❤️</div>
+  </section>
+
+  <!-- 5. CONTADOR Y LAS TRES ETAPAS -->
+  <section class="section">
+    <div class="eyebrow">Nuestro camino</div>
+    <h2>Nuestra línea de tiempo 🕰️</h2>
+
+    <div class="big-number">375 días</div>
+
+    <p>de historias, aprendizajes, abrazos y amor.</p>
+
+    <p>
+      Si nuestra historia fuera una canción, tendría tres etapas…
+      y estas tres canciones siempre me harán recordar cómo empezó todo. ❤️
+    </p>
+
+    <div class="timeline">
+
+      <!-- ETAPA 1 -->
+      <div class="event">
+        <div class="event-text">
+          <b>♡ Etapa 1 · El amor que nació en secreto</b><br>
+          <span class="muted"><i>“Mañana” — Karol G</i></span><br>
+          Cuando lo nuestro todavía era un secreto, cuando nadie sabía
+          lo que estaba naciendo entre nosotros y cada pequeño momento
+          se sentía especial.
+        </div>
+        <div class="event-photos">
+          <img src="etapa1-cancion.jpg" alt="Canción Mañana">
+          <img src="etapa1-nosotros.jpeg" alt="Nosotros en la etapa 1">
+        </div>
+      </div>
+
+      <!-- ETAPA 2 -->
+      <div class="event">
+        <div class="event-text">
+          <b>♡ Etapa 2 · El amor que me hizo enfrentar mis miedos</b><br>
+          <span class="muted"><i>“Dices Que Te Vas” — Karol G</i></span><br>
+          La etapa en la que empecé a sentir muchísimo por ti, aunque
+          también tenía miedo de enamorarme y salir lastimado. Poco a
+          poco, lo que sentía por ti se volvió más grande que mis dudas.
+        </div>
+        <div class="event-photos">
+          <img src="etapa2-cancion.jpg" alt="Canción Dices Que Te Vas">
+          <img src="etapa2-nosotros.jpeg" alt="Nosotros en la etapa 2">
+        </div>
+      </div>
+
+      <!-- ETAPA 3 -->
+      <div class="event">
+        <div class="event-text">
+          <b>♡ Etapa 3 · El amor que cambió mi mundo</b><br>
+          <span class="muted"><i>“La Vida Continuó” — Karol G</i></span><br>
+          Desde que llegaste, mi mundo giró de una manera distinta.
+          Esta canción me recuerda lo mucho que cambió mi vida al
+          encontrarte y lo feliz que soy de seguir escribiendo nuestra
+          historia contigo.
+        </div>
+        <div class="event-photos">
+          <img src="etapa3-cancion.jpg" alt="Canción La Vida Continuó">
+          <img src="etapa3-nosotros.jpeg" alt="Nosotros en la etapa 3">
+        </div>
+      </div>
+
+    </div>
+
+    <p>
+      Estas fueron las tres canciones de nuestro primer mes, y cada
+      una guarda una parte de nuestra historia. Ahora, después de
+      375 días, siguen recordándome lo bonito que es tenerte a mi lado.
+      Te amo, mi Gatito. ❤️
+    </p>
+  </section>
+
+  <!-- 6. TRES CITAS -->
+  <section class="section">
+    <div class="eyebrow">Tres recuerdos favoritos</div>
+    <h2>Nuestras tres citas ☕</h2>
+
+    <div class="timeline">
+      <div class="event">
+        <div class="event-text">
+          <b>01 · Café con Pan</b><br>
+          <span class="muted">
+            Nuestra primera cita. Un momento para guardar en el corazón,
+            con detalles bonitos y un recuerdo muy nuestro.
+          </span>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-text">
+          <b>02 · Cine a ver Spider-Man</b><br>
+          <span class="muted">
+            Nuestra segunda cita. Fuimos al cine a ver Spider-Man y
+            disfrutamos de una tarde increíble juntos.
+          </span>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-text">
+          <b>03 · El día que me pediste ser tu novio</b><br>
+          <span class="muted">
+            Fuimos al muelle, luego a comer en Liverpool y me diste
+            un anillo Pandora. Un día que cambió todo y que nunca
+            voy a olvidar.
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. AUDIO DE ALAN -->
+  <section class="section">
+    <div class="eyebrow">Escúchalo cuando quieras</div>
+    <h2>Un mensaje de tu novio 🎧</h2>
+
+    <p>Hay algo que quiero que escuches con mi propia voz.</p>
+
+    <audio controls preload="metadata">
+      <source src="te-amo.mp3" type="audio/mpeg">
+    </audio>
+  </section>
+
+  <!-- 8. PREGUNTAS Y ÚLTIMA SORPRESA -->
+  <section class="section">
+    <div class="eyebrow">Todavía falta algo…</div>
+
+    <img class="cover" src="foto-final.jpeg" alt="Nuestra foto final">
+
+    <h2>Una última sorpresa 👀💗</h2>
+
+    <p>
+      Antes de abrirla, quiero comprobar cuánto recuerdas de nuestra historia.
+    </p>
+
+    <button class="btn"
+      onclick="document.getElementById('quiz').classList.remove('hidden');this.classList.add('hidden')">
+      Aceptar el reto 💘
+    </button>
+
+    <div id="quiz" class="hidden">
+
+      <div class="quiz-question">
+        <h3>1. ¿Quién dijo “te amo” primero?</h3>
+        <label class="option"><input type="radio" name="q1" value="a"> Alan</label>
+        <label class="option"><input type="radio" name="q1" value="b"> Christian</label>
+        <label class="option"><input type="radio" name="q1" value="c"> Lo dijimos al mismo tiempo</label>
+      </div>
+
+      <div class="quiz-question">
+        <h3>2. ¿Cuál fue el momento en que nos dimos cuenta de que esto iba en serio?</h3>
+        <label class="option"><input type="radio" name="q2" value="a"> Cuando empezamos a compartir momentos solo nuestros</label>
+        <label class="option"><input type="radio" name="q2" value="b"> Después de nuestra primera cita</label>
+        <label class="option"><input type="radio" name="q2" value="c"> En nuestra primera cita</label>
+      </div>
+
+      <div class="quiz-question">
+        <h3>3. ¿Dónde fue nuestra primera cita?</h3>
+        <label class="option"><input type="radio" name="q3" value="a"> Café con Pan</label>
+        <label class="option"><input type="radio" name="q3" value="b"> En el cine</label>
+        <label class="option"><input type="radio" name="q3" value="c"> En un parque</label>
+      </div>
+
+      <button class="btn" onclick="checkQuiz()">
+        Comprobar respuestas 💗
+      </button>
+
+      <p class="feedback" id="quizFeedback" aria-live="polite"></p>
+
+      <!-- BOLETO DE VOLEIBOL -->
+      <div id="ticketReveal" class="hidden">
+        <div class="ticket">
+          <div class="ticket-label">
+            INVITACIÓN ESPECIAL · SOLO PARA GATITO
+          </div>
+
+          <h2>🎟️ Tienes una cita conmigo</h2>
+
+          <p><b>Estás invitado a verme jugar voleibol.</b></p>
+
+          <p>
+            Quiero que estés ahí, que me acompañes y que seas parte
+            de otro recuerdo bonito de nosotros.
+          </p>
+
+          <p>
+            <b>Para:</b> Mi Gatito ❤️<br>
+            <b>De:</b> Alancito<br>
+            <b>Fecha:</b> Sabado 17 de octubre <br>
+            <b>Lugar:</b> Canchas de CDUM
+          </p>
+
+          <div class="divider">♡ ♡ ♡</div>
+
+          <p style="text-align:center">
+            <b>Tu presencia es mi parte favorita del plan.</b>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="footer">
+    Hecho con amor para ti Habibi. ❤️<br>
+    Mi parte favorita de la historia siempre será la que todavía nos falta vivir.
+  </div>
+</main>
+
+<script>
+let heartProgress = 0;
+
+function goToHeart() {
+  document.getElementById('intro').classList.remove('active');
+  document.getElementById('heartScreen').classList.add('active');
+}
+
+function fillHeart() {
+  heartProgress = Math.min(100, heartProgress + 10);
+
+  document.getElementById('heartFill').style.clipPath =
+    `inset(${100 - heartProgress}% 0 0 0)`;
+
+  document.getElementById('heartLabel').textContent =
+    heartProgress + '% de amor cargado';
+
+  document.getElementById('progressBar').style.width =
+    heartProgress + '%';
+
+  if (heartProgress >= 100) {
+    document.getElementById('heartLabel').textContent =
+      '¡Has abierto tu regalo! ❤️';
+
+    document.getElementById('heartBtn').textContent =
+      'Ver mi regalo ✨';
+
+    document.getElementById('heartBtn').onclick = showGift;
+
+    setTimeout(showGift, 700);
+  }
+}
+
+document.getElementById('heart').addEventListener('click', fillHeart);
+
+document.getElementById('heart').addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    fillHeart();
+  }
+});
+
+function showGift() {
+  document.getElementById('heartScreen').classList.remove('active');
+  document.getElementById('gift').classList.add('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// El disco gira mientras se reproduce la canción.
+const song = document.getElementById('song');
+const record = document.getElementById('record');
+
+song.addEventListener('play', () => record.classList.add('playing'));
+song.addEventListener('pause', () => record.classList.remove('playing'));
+song.addEventListener('ended', () => record.classList.remove('playing'));
+
+// ====== CARRUSEL DE RECUERDOS ======
+const track = document.getElementById('carouselTrack');
+const dotsContainer = document.getElementById('carouselDots');
+const slides = track ? track.querySelectorAll('img') : [];
+
+if (track && slides.length) {
+  // Crear los puntitos
+  slides.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.addEventListener('click', () => {
+      track.scrollTo({ left: track.clientWidth * i, behavior: 'smooth' });
+    });
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = dotsContainer.querySelectorAll('span');
+
+  function updateDots() {
+    const index = Math.round(track.scrollLeft / track.clientWidth);
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+  }
+
+  track.addEventListener('scroll', () => {
+    window.requestAnimationFrame(updateDots);
+  });
+
+  updateDots();
+}
+
+function moveSlide(direction) {
+  if (!track) return;
+  track.scrollBy({
+    left: track.clientWidth * direction,
+    behavior: 'smooth'
+  });
+}
+// ====================================
+
+// Respuestas correctas del quiz
+const correctAnswers = {
+  q1: 'b',
+  q2: 'b',
+  q3: 'a'
+};
+
+function checkQuiz() {
+  let score = 0;
+  let answered = 0;
+
+  for (const q of ['q1', 'q2', 'q3']) {
+    const chosen = document.querySelector(`input[name="${q}"]:checked`);
+
+    if (chosen) {
+      answered++;
+      if (chosen.value === correctAnswers[q]) score++;
+    }
+  }
+
+  const feedback = document.getElementById('quizFeedback');
+
+  if (answered < 3) {
+    feedback.textContent = 'Contesta las tres preguntas, mi amor. 🥺❤️';
+    return;
+  }
+
+  if (score === 3) {
+    feedback.textContent =
+      '¡Las recordaste todas! Sabes que nuestra historia es muy especial. 💗';
+
+    document.getElementById('ticketReveal').classList.remove('hidden');
+
+    document.getElementById('ticketReveal').scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    });
+  } else {
+    feedback.textContent =
+      `Tuviste ${score} de 3. ¡Inténtalo otra vez, mi niño! ❤️`;
+  }
+}
+</script>
+
+</body>
+</html>
